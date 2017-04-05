@@ -9,7 +9,7 @@ function W = csp(D1, D2)
     if(nargin ~= 2)
         disp('Must have 2 classes for CSP')
     end
-    [~, ~, k1] = size(D1); [~,~,k2] = size(D2); k = min(k1,k2);
+    [~, ~, k] = size(D1);
     c{1} = 0; c{2} = 0;  % initialize the normalized spatial covariance for single trial
     for i = 1:k
        data1 = D1(:,:,i); data2 = D2(:,:,i);  % data for one trial

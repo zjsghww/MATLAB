@@ -1,0 +1,10 @@
+
+// data record @2017-04-05
+// This file is used to record the experiment result in the "memory" project.
+
+1. accuracy_1000_times.mat: 
+   data of 4 subjects(sub.4/5/6/7 in the whole data set), using CSP to extract the features
+(train set and test set are divided into 6:4, using 60 features for each trial), then apply 
+SVM to classify, cross validation is applied for 1000 times.
+
+
