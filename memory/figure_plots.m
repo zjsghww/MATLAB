@@ -11,4 +11,4 @@ path([path 'C:\Users\Steffen\Documents\MATLAB\EEG_Box'];
 load('C:\Users\Steffen\Documents\MATLAB\EEG_Box\chanlocs_from_Analyzer2_128Ch.mat');
 
 figure; topoplot(double(log(squeeze(mean(mean(onepsd(s,:,1:4,allevents(s,:)==stim & allgoodevents(s,:)),3),4)))'), chanlocs);
-figure; topoplot(double(squeeze(mean(mean(onedata(s,:,480:520,allevents(s,:)==stim & allgoodevents(s,:)),3),4))'), chanlocs);
+figure; topoplot(double(squeeze(mean(mean(onedata(s,:,700:800,allevents(s,:)==stim & allgoodevents(s,:)),3),4))'), chanlocs);

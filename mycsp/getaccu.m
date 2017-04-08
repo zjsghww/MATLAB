@@ -1,19 +1,23 @@
 
+% get_f.m is the feature extraction module 
+% input : data(train or test) channel * sample point * trial
+%         label contrains two classes
+% output : feature matrix (for each trial, there is a feature vector)
 
-function accu = getaccu(eegdata, eeglabel)
+function accu = getaccu(data, label)
 
 % compute the project matrix W
 
-[m,n,k]=size(eegdata);
-D1 = eegdata(:,:,find(eeglabel == 1));
-D2 = eegdata(:,:,find(eeglabel == 2));
+[m,n,k]=size(data);
+D1 = data(:,:,find(label == 1));
+D2 = data(:,:,find(label == 2));
 W = csp(D1,D2);
 
 % compute the common spatial patterns and features of each trial
 %%=============================================================%%
 dim = 2; f = zeros(k,dim); z_csp = zeros(dim,n);
 for i=1:k
-   z = W*eegdata(:,:,i);
+   z = W*data(:,:,i);
    j=1;
    for t=1:dim   % choose the first dim/2 and last dim/2 csps of z
      if(mod(t,2)==0)
@@ -41,8 +45,8 @@ accu = 0;
 for i=0:(10-10*r)
     train = f(gap*i+1 : (10*r+i)*gap,:);
     test = f(setdiff(1:k,gap*i+1:(10*r+i)*gap),:);
-    label = eeglabel(gap*i+1 : (10*r+i)*gap);
-    group = eeglabel(setdiff(1:k,gap*i+1:(10*r+i)*gap));
+    label = label(gap*i+1 : (10*r+i)*gap);
+    group = label(setdiff(1:k,gap*i+1:(10*r+i)*gap));
     svmstruct = svmtrain(train, label);
     predict = svmclassify(svmstruct,test);
     accu = accu + length(find(predict==group))/length(predict);
