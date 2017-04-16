@@ -3,7 +3,7 @@
 % test set, use the features from train set to build the classification...
 % model,then predict the label for feature vectors from test set.
 
-function accu = cv(eegdata, eeglabel,sub_no)
+function [accu,sd] = cv(eegdata, eeglabel)
     [~,~,k] = size(eegdata);
     class1trials = find(eeglabel==1);
     class2trials = find(eeglabel==2);
@@ -11,7 +11,7 @@ function accu = cv(eegdata, eeglabel,sub_no)
     data2 = eegdata(:,:,class2trials);
     r = 0.7; % r is the rate between train and test     
     fold = 10;  % fold number of cross validation
-    accu_sum = 0;
+    accu_sum = zeros(fold,1);
     for i = 1:fold
         rp = randperm(k/2);
         half_train_num = ceil(r*k/2);
@@ -24,16 +24,19 @@ function accu = cv(eegdata, eeglabel,sub_no)
         t = int16(k/2-half_train_num);
         group = [ones(t,1);ones(t,1)+1];
         group_m(:,i) = group;
+%         train_feature = getemdfeatures(train);
         train_feature = get_f(train, label);
         train_f_m(:,:,i) = train_feature;  %
         svmstruct = svmtrain(train_feature, label);
+%         test_feature = getemdfeatures(test);
         test_feature = get_f(test,group);
         test_f_m(:,:,i) = test_feature;
         predict = svmclassify(svmstruct, test_feature);
-        accu_sum = accu_sum + length(find(predict == group))/(k-2*half_train_num);  
+        accu_sum(i) =  length(find(predict == group))/(k-2*half_train_num);  
     end
-    save(strcat('sub',num2str(sub_no),'.mat'),'train_f_m','label_m','test_f_m','group_m')
-    accu = accu_sum / fold;
+%      save(strcat('sub',num2str(sub_no),'.mat'),'train_f_m','label_m','test_f_m','group_m')
+    accu = mean(accu_sum);
+    sd = std(accu_sum);
 end
 
 
