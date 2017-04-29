@@ -33,7 +33,7 @@ function [accu_sum,accu,sd] = cv(eegdata, eeglabel)
 %         test_f_m(:,:,i) = test_feature;
 %         predict = svmclassify(svmstruct, test_feature);
         predictlabel = predict(B,test_feature);
-        accu_sum(i) =  length(find(str2num(cell2mat(predictlabel)) == group))/(k-2*half_train_num);  
+        accu_sum(i) =  length(find(str2num() == group))/(k-2*half_train_num);  
     end
 %      save(strcat('sub',num2str(sub_no),'.mat'),'train_f_m','label_m','test_f_m','group_m')
     accu = mean(accu_sum);

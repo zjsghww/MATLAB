@@ -1,5 +1,5 @@
 
-% get_f.m is the feature extraction module 
+% get_f.m is the feature extraction module for csp
 % input : data(train or test) channel * sample point * trial
 %         label contrains two classes
 % output : feature matrix (for each trial, there is a feature vector)
@@ -13,7 +13,7 @@ function f = get_f(data, label)
     W = csp(D1,D2);
 
     % compute the common spatial patterns and features of each trial
-    dim = 2; f = zeros(k,dim); z_csp = zeros(dim,n);
+    dim = 4; f = zeros(k,dim); z_csp = zeros(dim,n);
     for i=1:k
        z = W*data(:,:,i);
        j=1;
