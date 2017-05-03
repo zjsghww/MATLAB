@@ -13,7 +13,7 @@ function f = get_f(data, label)
     W = csp(D1,D2);
 
     % compute the common spatial patterns and features of each trial
-    dim = 4; f = zeros(k,dim); z_csp = zeros(dim,n);
+    dim = 2; f = zeros(k,dim); z_csp = zeros(dim,n);
     for i=1:k
        z = W*data(:,:,i);
        j=1;
